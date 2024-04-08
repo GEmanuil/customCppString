@@ -3,7 +3,7 @@
 String::String()
 {
 	string = new (std::nothrow) char[1];
-	if (!string) { std::cout << "memory problem"; exit(EXIT_FAILURE) };
+	if (!string) { std::cout << "memory problem"; exit(EXIT_FAILURE); };
 	string[0] = '\0';
 	stringSize = 0;
 
