@@ -36,6 +36,7 @@ String& String::operator=(const String& other)
 	if (this != &other)
 	{
 		free();
+		this->stringSize = other.stringSize;
 		this->string = new (std::nothrow) char[stringSize + 1];
 		if (!string) { std::cout << "memory problem"; exit(EXIT_FAILURE); }
 		for (int i = 0; i < stringSize + 1; i++)
