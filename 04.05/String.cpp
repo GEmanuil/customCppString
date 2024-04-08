@@ -1,84 +1,93 @@
 #include "String.h"
-#include <cstring>
-#include <iostream>
-#pragma warning(disable:4996)
-
 
 String::String()
 {
-    copy("\0");
+	string = new (std::nothrow) char[1];
+	if (!string) std::cout << "memory problem"; exit(EXIT_FAILURE);
+	string[0] = '\0';
+	stringSize = 0;
+
 }
 
 String::String(const char* arr)
 {
-	copy(arr);
+	stringSize = strlen(arr);
+	string = new (std::nothrow) char[stringSize + 1];
+	if (!string) { std::cout << "memory problem"; exit(EXIT_FAILURE); }
+	for (int i = 0; i < stringSize; i++)
+	{
+		string[i] = arr[i];
+	}
+	string[stringSize] = '\0';
 }
 
-String::String(const String& other)
+String::String(const String& other) : stringSize(other.stringSize)
 {
-    lenght = other.lenght;
-    str = new char[strlen(other.str) + 1];
-    strcpy(str, other.str);
+	this->string = new (std::nothrow) char[stringSize + 1];
+	if (!string) { std::cout << "memory problem"; exit(EXIT_FAILURE); }
+	for (int i = 0; i < stringSize + 1; i++)
+	{
+		string[i] = other.string[i];
+	}
 }
 
 String& String::operator=(const String& other)
 {
-    if (this != &other)
-    {        
-        lenght = other.lenght;
-        delete[] str;
-        str = new char[strlen(other.str) + 1];
-        strcpy(str, other.str);
-    }
-
-    return *this;
+	if (this != &other)
+	{
+		free();
+		this->string = new (std::nothrow) char[stringSize + 1];
+		if (!string) { std::cout << "memory problem"; exit(EXIT_FAILURE); }
+		for (int i = 0; i < stringSize + 1; i++)
+		{
+			string[i] = other.string[i];
+		}
+	}
+	return *this;
 }
 
-void String::copy(const char* arr)
+void String::operator+=(const String& other)
 {
-	str = new char [strlen(arr) + 1];
-    setLenght(strlen(arr));
-	strcpy(str, arr);
-}
-
-void String::concat(const char* arr)
-{
-    char* temp = new char[strlen(str) + 1];
-    strcpy(temp, str);
-
-    delete[] str;
-
-    str = new char[lenght + strlen(arr) + 1];
-
-    setLenght(strlen(str)); 
-    strcpy(str, temp);      
-    strcat(str, arr);       
-}
-
-void String::erase()
-{
-    delete[] str;
-    str = nullptr;
-    setLenght(0);
-}
-
-void String::print()
-{
-    std::cout << str;
-}
-
-size_t String::getLenght()
-{
-    return lenght;
+	*this = *this + other;
 }
 
 String::~String()
 {
-	delete[] str;
+	free();
 }
 
-void String::setLenght(size_t lenght)
+const int String::getStringSize() const
 {
-    this->lenght = lenght;
+	return stringSize;
 }
 
+String String::operator+(const String& other) const
+{
+	char* arr = new (std::nothrow) char[getStringSize() + other.getStringSize() + 1];
+	if (!arr) { std::cout << "memory problem"; exit(EXIT_FAILURE); }
+	for (int i = 0; i < getStringSize(); i++)
+	{
+		arr[i] = string[i];
+	}
+	for (int i = 0; i < other.getStringSize() + 1; i++)
+	{
+		arr[getStringSize() + i] = other.string[i];
+	}
+
+	return String(arr);
+}
+
+const char& String::operator[](const int& n) const
+{
+	return string[n];
+}
+
+char& String::operator[](const int& n)
+{
+	return string[n];
+}
+
+void String::free()
+{
+	delete[] string;
+}
