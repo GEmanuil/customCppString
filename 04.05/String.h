@@ -5,24 +5,24 @@ class String
 {
 public:
 	String();
-	String(const char* arr);
+	String(const char* array);
 	String(const String& other);
 	String& operator=(const String& other);
 	void operator+=(const String& other);
-	String operator+(const String& one) const;
+	String operator+(const String& other) const;
 	~String();
 
-	int getStringSize() const;
 	void erase();
+	int getStringSize() const;
 
-	const char& operator[](const int& n) const;
 	char& operator[](const int& n);
+	const char& operator[](const int& n) const;
 
 	friend std::ostream& operator<<(std::ostream& stream, const String& str);
 
 private:
 	char* string;
-	unsigned stringSize;
+	unsigned size;
 
 	void free();
 };

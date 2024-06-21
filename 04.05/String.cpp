@@ -4,24 +4,24 @@ String::String()
 {
 	string = new char[1];
 	string[0] = '\0';
-	stringSize = 0;
+	size = 0;
 }
 
 String::String(const char* arr)
 {
-	stringSize = strlen(arr);
-	string = new char[stringSize + 1];
-	for (int i = 0; i < stringSize; i++)
+	size = strlen(arr);
+	string = new char[size + 1];
+	for (int i = 0; i < size; i++)
 	{
 		string[i] = arr[i];
 	}
-	string[stringSize] = '\0';
+	string[size] = '\0';
 }
 
-String::String(const String& other) : stringSize(other.stringSize)
+String::String(const String& other) : size(other.size)
 {
-	this->string = new char[stringSize + 1];
-	for (int i = 0; i < stringSize + 1; i++)
+	this->string = new char[size + 1];
+	for (int i = 0; i < size + 1; i++)
 	{
 		string[i] = other.string[i];
 	}
@@ -32,10 +32,10 @@ String& String::operator=(const String& other)
 	if (this != &other)
 	{
 		free();
-		this->stringSize = other.stringSize;
-		this->string = new char[stringSize + 1];
+		size = other.size;
+		string = new char[size + 1];
 
-		for (int i = 0; i < stringSize + 1; i++)
+		for (int i = 0; i < size + 1; i++)
 		{
 			string[i] = other.string[i];
 		}
@@ -56,13 +56,13 @@ String::~String()
 
 int String::getStringSize() const
 {
-	return stringSize;
+	return size;
 }
 
 void String::erase()
 {
+	size = 0;
 	free();
-	stringSize = 0;
 }
 
 String String::operator+(const String& other) const
