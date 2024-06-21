@@ -12,18 +12,17 @@ public:
 	String operator+(const String& one) const;
 	~String();
 
+	int getStringSize() const;
+	void erase();
 
-	const int getStringSize() const;
-
-	//using this to access the string when the object String is const
 	const char& operator[](const int& n) const;
-	//using this as a lvalue
 	char& operator[](const int& n);
 
+	friend std::ostream& operator<<(std::ostream& stream, const String& str);
 
 private:
 	char* string;
-	size_t stringSize;
+	unsigned stringSize;
 
 	void free();
 };

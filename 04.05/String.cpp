@@ -2,18 +2,15 @@
 
 String::String()
 {
-	string = new (std::nothrow) char[1];
-	if (!string) { std::cout << "memory problem"; exit(EXIT_FAILURE); };
+	string = new char[1];
 	string[0] = '\0';
 	stringSize = 0;
-
 }
 
 String::String(const char* arr)
 {
 	stringSize = strlen(arr);
-	string = new (std::nothrow) char[stringSize + 1];
-	if (!string) { std::cout << "memory problem"; exit(EXIT_FAILURE); }
+	string = new char[stringSize + 1];
 	for (int i = 0; i < stringSize; i++)
 	{
 		string[i] = arr[i];
@@ -23,8 +20,7 @@ String::String(const char* arr)
 
 String::String(const String& other) : stringSize(other.stringSize)
 {
-	this->string = new (std::nothrow) char[stringSize + 1];
-	if (!string) { std::cout << "memory problem"; exit(EXIT_FAILURE); }
+	this->string = new char[stringSize + 1];
 	for (int i = 0; i < stringSize + 1; i++)
 	{
 		string[i] = other.string[i];
@@ -37,8 +33,8 @@ String& String::operator=(const String& other)
 	{
 		free();
 		this->stringSize = other.stringSize;
-		this->string = new (std::nothrow) char[stringSize + 1];
-		if (!string) { std::cout << "memory problem"; exit(EXIT_FAILURE); }
+		this->string = new char[stringSize + 1];
+
 		for (int i = 0; i < stringSize + 1; i++)
 		{
 			string[i] = other.string[i];
@@ -49,6 +45,7 @@ String& String::operator=(const String& other)
 
 void String::operator+=(const String& other)
 {
+	//TODo here should be the main object and operator+ should call it
 	*this = *this + other;
 }
 
@@ -57,15 +54,21 @@ String::~String()
 	free();
 }
 
-const int String::getStringSize() const
+int String::getStringSize() const
 {
 	return stringSize;
 }
 
+void String::erase()
+{
+	free();
+	stringSize = 0;
+}
+
 String String::operator+(const String& other) const
 {
-	char* arr = new (std::nothrow) char[getStringSize() + other.getStringSize() + 1];
-	if (!arr) { std::cout << "memory problem"; exit(EXIT_FAILURE); }
+	char* arr = new char[getStringSize() + other.getStringSize() + 1];
+
 	for (int i = 0; i < getStringSize(); i++)
 	{
 		arr[i] = string[i];
@@ -91,4 +94,10 @@ char& String::operator[](const int& n)
 void String::free()
 {
 	delete[] string;
+}
+
+std::ostream& operator<<(std::ostream& stream, const String& str)
+{
+	stream << str.string;
+	return stream;
 }

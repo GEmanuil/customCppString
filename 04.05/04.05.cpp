@@ -1,10 +1,11 @@
 #include <iostream>
 #include "String.h"
+#include <crtdbg.h>
 
 int main()
 { 
-    String strin = "I like ";
-    strin.concat(" hotdogs");
-    strin.erase();
-    std::cout << strin.getLenght();
+    String string = "I like ";
+    string += "pizza";
+    String str3;
+    std::cout << string;
 }
