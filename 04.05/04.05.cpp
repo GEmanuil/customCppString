@@ -4,8 +4,12 @@
 
 int main()
 { 
-    String string = "I like ";
-    string += "pizza";
-    String str3;
-    std::cout << string;
+    {
+        String string = "I like ";
+
+        String str3 = string + "pizza";
+        std::cout << str3;
+    }
+    _CrtDumpMemoryLeaks();
+  
 }

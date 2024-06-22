@@ -77,17 +77,21 @@ String String::operator+(const String& other) const
 	{
 		arr[getStringSize() + i] = other.string[i];
 	}
+	String result(arr);
+	delete[] arr;
 
-	return String(arr);
+	return result;
 }
 
 const char& String::operator[](const int& n) const
 {
+	if (n > getStringSize()) throw std::out_of_range("index out of range");
 	return string[n];
 }
 
 char& String::operator[](const int& n)
 {
+	if (n > getStringSize()) throw std::out_of_range("index out of range");
 	return string[n];
 }
 
